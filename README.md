@@ -1,11 +1,13 @@
 # gkm
 
-gkm is a git ssh-key manager.
+## gkm is a Git ssh-keys manager.
 
-## How to install
+#### Multiple SSH Keys for different GitHub accounts on macOS.
 
-Create new folder '.gkm' under your home folder.
-Move the 'gkm.sh' file into the '.gkm' folder, which under your home directory.
+### How to install
+
+- Create new folder **.gkm** under your home folder.
+- Move the **gkm.sh** file into the **.gkm** folder, which under your home directory.
 
 ```shell
 # Use the following command to update the permission.
