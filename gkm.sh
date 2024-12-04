@@ -186,11 +186,25 @@ function git_key_remove {
 
 # Function to uninstall gkm and remove all SSH keys
 function gkm_uninstall {
-    read -p "Are you sure you want to uninstall gkm and remove all SSH keys? (y/n): " confirm
-    if [ "$confirm" == "y" ]; then
-        rm -f ~/.ssh/*
-        rm -f "$0"
-        echo "All SSH keys and gkm script have been removed."
+    # First confirmation for uninstalling gkm and removing ~/.gkm folder
+    read -p "Are you sure you want to uninstall gkm? This will remove the ~/.gkm folder and gkm alias. (Y/n): " confirm_uninstall
+    confirm_uninstall=${confirm_uninstall:-y}  # Default to 'y' if no input
+
+    if [ "$confirm_uninstall" == "y" ]; then
+        # Second confirmation before deleting SSH keys
+        read -p "Are you sure you want to delete all SSH keys? This action is irreversible. (y/N): " confirm_delete
+        confirm_delete=${confirm_delete:-n}  # Default to 'n' if no input
+
+        if [ "$confirm_delete" == "y" ]; then
+            rm -f ~/.ssh/*
+            echo "All SSH keys have been removed."
+        else
+            echo "SSH keys removal skipped."
+        fi
+        # Remove ~/.gkm folder and gkm alias (default action)
+        rm -rf ~/.gkm
+        unset gkm
+        echo "gkm folder and alias have been removed."
     else
         echo "Uninstall canceled."
     fi
