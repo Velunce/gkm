@@ -44,10 +44,22 @@ function install_gkm {
     # Make the script executable
     chmod +x "$GKM_SCRIPT"
 
-    # Add gkm alias to the shell profile for bash, zsh, etc.
-    for shell_profile in "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.zshrc" "$HOME/.profile"; do
-        add_alias "$shell_profile"
-    done
+    # Add gkm alias to the active shell profile
+    local shell_profile
+    shell_profile=$(basename "$SHELL")
+    case "$shell_profile" in
+        bash) add_alias "$HOME/.bashrc" ;;
+        zsh) add_alias "$HOME/.zshrc" ;;
+        *) add_alias "$HOME/.profile" ;; # Fallback for other shells
+    esac
+
+    # Activate the first SSH key
+    echo "Activating the first available SSH key..."
+    if gkm use 1; then
+        echo "First SSH key activated successfully."
+    else
+        echo "Failed to activate the first SSH key. You may need to configure one manually using 'gkm new'."
+    fi
 
     echo "Installation complete. Please run 'source ~/.bashrc' or 'source ~/.zshrc' (depending on your shell) to start using 'gkm'."
 }

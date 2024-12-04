@@ -17,7 +17,7 @@
 您可以使用以下命令直接从 GitHub 安装 `gkm`：
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/Velunce/gkm/main/install.sh | bash
+curl -sSL https://ghp.ci/https://raw.githubusercontent.com/Velunce/gkm/main/install.sh | bash
 ```
 
 此命令将：
