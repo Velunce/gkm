@@ -11,13 +11,14 @@
 - **生成新 SSH 密钥**：通过提供用户名和电子邮件生成新 SSH 密钥。
 - **删除 SSH 密钥**：根据列表中的索引删除现有 SSH 密钥。
 - **卸载 GKM**：从系统中完全删除 GKM 脚本和所有 SSH 密钥。
+- **更新 GKM**：将 GKM 脚本更新到最新版本。
 
 ## 安装
 
 您可以使用以下命令直接从 GitHub 安装 `gkm`：
 
 ```bash
-curl -sSL https://ghp.ci/https://raw.githubusercontent.com/Velunce/gkm/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/Velunce/gkm/main/install.sh | bash
 ```
 
 此命令将：
@@ -43,13 +44,13 @@ gkm list
 您可以通过指定索引号或用户名来切换活动 SSH 密钥：
 
 ```bash
-gkm use 1
+gkm use [ORDER_NUMBER]
 ```
 
 或按用户名切换：
 
 ```bash
-gkm use <username>
+gkm use [USER_NAME]
 ```
 
 ### 3. 生成新的 SSH 密钥
@@ -65,7 +66,12 @@ gkm new
 根据列表中的索引删除 SSH 密钥：
 
 ```bash
-gkm remove 2
+gkm remove [ORDER_NUMBER]
+
+# 或
+
+gkm remove
+# 输入要删除的 SSH 密钥索引：[ORDER_NUMBER]
 ```
 
 ### 5. 卸载 GKM
@@ -74,6 +80,14 @@ gkm remove 2
 
 ```bash
 gkm uninstall
+```
+
+### 6. 更新 GKM
+
+将 GKM 脚本更新到最新版本：
+
+```bash
+gkm update
 ```
 
 ## 支持的 Shell
@@ -91,7 +105,6 @@ gkm uninstall
 请随意分叉存储库并提交拉取请求以进行改进或添加功能。
 
 1. 分叉项目。
-
 2. 创建您的功能分支（`git checkout -b feature/new-feature`）。
 3. 提交更改（`git commit -m 'Add some feature'`）。
 4. 推送到分支（`git push origin feature/new-feature`）。
