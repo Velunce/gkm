@@ -1,6 +1,6 @@
-# GKM - Git Key Manager
+# GKM - Git SSh-Key Manager
 
-`GKM` (Git Key Manager) is a simple shell-based tool to manage SSH keys. It allows users to list, switch, generate, and remove SSH keys conveniently via command-line operations.
+`GKM` (Git SSH-Key Manager) is a simple shell-based tool to manage SSH keys. It allows users to list, switch, generate, and remove SSH keys conveniently via command-line operations.
 
 [简体中文](./README-zhHans.md)
 
@@ -11,6 +11,7 @@
 - **Generate New SSH Key**: Generate a new SSH key by providing a username and email.
 - **Remove SSH Key**: Delete an existing SSH key based on its index in the list.
 - **Uninstall GKM**: Completely remove the GKM script and all SSH keys from your system.
+- **Update GKM**: Update the GKM script to your system.
 
 ## Installation
 
@@ -43,13 +44,13 @@ gkm list
 You can switch the active SSH key by specifying the index number or the username:
 
 ```bash
-gkm use 1
+gkm use [ORDER_NUMBER]
 ```
 
 or by username:
 
 ```bash
-gkm use <username>
+gkm use [USER_NAME]
 ```
 
 ### 3. Generate a New SSH Key
@@ -65,7 +66,12 @@ gkm new
 To remove an SSH key based on its index in the list:
 
 ```bash
-gkm remove 2
+gkm remove [ORDER_NUMBER]
+
+# Or
+
+gkm remove
+# Enter the index of the SSH key to remove: [ORDER_NUMBER]
 ```
 
 ### 5. Uninstall GKM
@@ -74,6 +80,14 @@ To uninstall `gkm` and remove all installed SSH keys from your system:
 
 ```bash
 gkm uninstall
+```
+
+### 6. Update GKM
+
+To update `gkm` to your system:
+
+```bash
+gkm update
 ```
 
 ## Supported Shells

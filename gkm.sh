@@ -159,13 +159,25 @@ function ssh_key_generate {
 
 # Function to remove an SSH key by index
 function git_key_remove {
-    get_ssh_key_list
-    read -p "Enter the index of the SSH key to remove: " key_index
+    keys=(~/.ssh/*.pub)
+
+    # Check if no SSH keys are found
+    if [ ! -e "${keys[0]}" ]; then
+        echo "No SSH keys found in ~/.ssh"
+        return
+    fi
+
+    # If no index is provided, display the list and prompt for input
+    if [ -z "$1" ]; then
+        get_ssh_key_list
+        read -p "Enter the index of the SSH key to remove: " key_index
+    else
+        key_index=$1
+    fi
 
     # Convert input to zero-based index
     key_index=$((key_index - 1))
 
-    keys=(~/.ssh/*.pub)
     if [ -z "${keys[$key_index]}" ]; then
         echo "Invalid key number."
         return
@@ -179,6 +191,7 @@ function git_key_remove {
 
     if [ $? -eq 0 ]; then
         echo "Removed SSH key: $private_key and $selected_key"
+        get_ssh_key_list
     else
         echo "Failed to remove SSH key."
     fi
@@ -210,6 +223,23 @@ function gkm_uninstall {
     fi
 }
 
+# Function to update gkm script
+function update_gkm {
+    echo "Updating gkm script..."
+    script_url="https://raw.githubusercontent.com/Velunce/gkm/refs/heads/main/gkm.sh"
+    gkm_script_path="$0"  # Overwrite the current script
+
+    # Download the latest script
+    curl -o "$gkm_script_path" "$script_url" --silent --fail
+
+    if [ $? -eq 0 ]; then
+        chmod +x "$gkm_script_path"
+        echo "gkm script updated successfully and overwritten at $gkm_script_path."
+    else
+        echo "Failed to update gkm script. Please check your internet connection or the URL."
+    fi
+}
+
 # Function to display all available commands
 function gkm_help {
     echo "Usage: gkm [command]"
@@ -220,6 +250,7 @@ function gkm_help {
     echo "new    - Generate a new SSH key (prompts for username, email, and key type)."
     echo "remove      - Remove an SSH key by its index."
     echo "uninstall   - Uninstall gkm script and remove all SSH keys."
+    echo "update      - Update gkm script to the latest version."
 }
 
 # Main command handler
@@ -238,10 +269,13 @@ case $1 in
         ssh_key_generate
         ;;
     "remove")
-        git_key_remove
+        git_key_remove $2
         ;;
     "uninstall")
         gkm_uninstall
+        ;;
+    "update")
+        update_gkm
         ;;
     *)
         gkm_help
